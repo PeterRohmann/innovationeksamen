@@ -124,8 +124,7 @@ export default class SwipeUI extends React.Component {
 // bruger absolute position så billederne stacker, stedet for at være over og under hinanden 
 
     renderUsers = () => {
-  console.log(recipearray)
-  console.log(ingredientarray)
+  
   let index = 0
   let score = 0
   let scorearray = []
@@ -140,17 +139,15 @@ export default class SwipeUI extends React.Component {
     score = 0
   })
   scorearray.indexOf(Math.max.apply(Math, scorearray))
- console.log(scorearray)
- console.log(Math.max.apply(Math, scorearray))
- console.log(scorearray.indexOf(Math.max.apply(Math, scorearray)))
+
 let finalarray = []
  for ( let i = 0 ; scorearray.length !== 0 ; i++ ){
   let maxindex = scorearray.indexOf(Math.max.apply(Math, scorearray))
-  console.log("scorearray: "+scorearray)
+  
   finalarray.push(idarray[maxindex])
   scorearray.splice(maxindex, 1)
   idarray.splice(maxindex, 1)
-  console.log(finalarray)
+  
  }
  let finalarray2 = []
 finalarray.forEach(element => {finalarray2.push(element)})
@@ -179,12 +176,11 @@ for ( let i = 0 ; finalarray.length !== 0 ; i++ ){
         }
         else if (i == this.state.currentIndex) {
           //Kører på alle undtagen det sidste billede i stacken
-          console.log(swipeindexarray)
-          console.log("her? "+finalarray2)
+          
           swipeindexarray.forEach(element => {swipeidarray.push(finalarray2[element])})
           
           swipeindexarray = []
-          console.log(swipeidarray)
+          
           return (
             <Animated.View
             // her tilføjes animationen til kun det første index

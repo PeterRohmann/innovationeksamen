@@ -16,9 +16,9 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 const Add_edit_Ingredients = ({navigation,route}) => {
 //Dette er hvad der skal sendes til realtime databasen. 
     const initialState = {
-        Brand: '',
-        Item: '',
-        Price: ''
+        
+        Item: ''
+        
     }
 
     const [newIngredient,setNewIngredient] = useState(initialState);
@@ -30,6 +30,7 @@ const Add_edit_Ingredients = ({navigation,route}) => {
         if(isEditIngredient){
             const ingredient = route.params.ingredient[1];
             setNewIngredient(ingredient)
+            console.log("her : "+ route.params)
         }
 //Fjern dataen igen, når vi går væk fra Edit ingredient. Også kaldet en clean-up af useEffect
         return () => {
@@ -47,10 +48,10 @@ const Add_edit_Ingredients = ({navigation,route}) => {
 
     const handleSave = () => {
 
-        const { Brand, Item, Price } = newIngredient;
+        const { Item } = newIngredient;
 
 //Kontrollerer om felterne er tomme
-        if(Brand.length === 0 || Item.length === 0 || Price.length === 0 ){
+        if(Item.length === 0){
             return Alert.alert('Et af felterne er tomme!');
         }
 
@@ -62,7 +63,7 @@ const Add_edit_Ingredients = ({navigation,route}) => {
                     .database()
                     .ref(`/Ingredients/${id}`)
                     // Bruger update så kun de angivne felter ændres. De øvrige felter er uændret
-                    .update({ Brand, Item, Price  });
+                    .update({Item});
               
                 Alert.alert("Din ingrediens er nu opdateret");
                 const ingredient = [id,newIngredient]
@@ -73,12 +74,14 @@ const Add_edit_Ingredients = ({navigation,route}) => {
             }
 
         }else{
+            
+            
 // hvis den ikke findes i forvejen så er den jo ny. så bruger vi push til at tilføje et nyt datasæt til databasen
             try {
                 firebase
                     .database()
                     .ref('/Ingredients/')
-                    .push({ Brand, Item, Price });
+                    .push({Item});
                 Alert.alert(`Din ingrediens er nu tilføjet`);
                 setNewIngredient(initialState)
             } catch (error) {

@@ -23,16 +23,11 @@ const IngredientList = ({navigation}) => {
     },[]);
 
     if(ingredients){
-        console.log(ingredients)
         const temp = Object.values(ingredients)
-        console.log(Object.values(ingredients))
         ingredientarray = []
-        temp.forEach(element => {{ ingredientarray.push(Object.values(ingredients)[index].Item) ; index++ }});
+        temp.forEach(element => {{ ingredientarray.push(Object.values(ingredients)[index].Item.toLowerCase()) ; index++ }});
         index = 0
-        console.log(ingredientarray)
-        
         //skal tømmes til sidst!!!!!
-        
     }
 
     
@@ -65,7 +60,7 @@ const IngredientList = ({navigation}) => {
                 return(
                     <TouchableOpacity style={styles.container} onPress={() => handleSelectIngredient(ingredientKeys[index])}>
                         <Text>
-                            {item.Brand} {item.Item}
+                            {item.Item}
                         </Text>
                     </TouchableOpacity>
                 )

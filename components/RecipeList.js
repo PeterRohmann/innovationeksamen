@@ -3,6 +3,8 @@ import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import firebase from 'firebase/compat';
 import {useEffect, useState} from "react";
 import { swipeidarray } from './SwipeUI'
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+
 
 let arrayforlist = []
 let arrayfordetails = []
@@ -10,6 +12,8 @@ let arrayfordetails = []
 const RecipesList = ({navigation}) => {
 
     const [recipes,setrecipes] = useState()
+    const isFocused = useIsFocused()
+console.log(recipes)
 
     useEffect(() => {
         if(!recipes) {
@@ -20,13 +24,16 @@ const RecipesList = ({navigation}) => {
                     setrecipes(snapshot.val())
                 });
         }
-    },[]);
- 
-    // Vi viser denne text hvis der ikke er data i recipes dokumentet i databasen
-    if (!recipes) {
-        return <Text>Klik på add recipes for at tilføje ingredienser</Text>;
-    }
+    }, [isFocused]);
 
+ console.log(recipes)
+    // Vi viser denne text hvis der ikke er data i recipes dokumentet i databasen
+    
+    if (!recipes) {
+        return 
+    }
+arrayforlist = []
+arrayfordetails = []
    swipeidarray.forEach((element) => {
        // console.log(element)
        arrayforlist.push(recipes[element])
@@ -34,8 +41,9 @@ const RecipesList = ({navigation}) => {
     // laver alle values og keys om til arrays, så FlaiList kan tage imod dem
     //console.log(Object.entries(recipes).length)
     //console.log(Object.entries(recipes)[0][0])
-    const recipeArray = Object.values(recipes);
+    
     const recipeKeys = Object.keys(recipes);
+    console.log(recipeKeys)
     
    
 swipeidarray.forEach((element) => {

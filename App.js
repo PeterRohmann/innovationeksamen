@@ -114,12 +114,12 @@ if (!firebase.apps.length) {
 export default function App() {
   return (
     <NavigationContainer>
-    <Tab.Navigator>
-    <Tab.Screen name={'Home'} component={StackNavigation} options={{tabBarIcon: () => ( <Ionicons name="home" size={20} />),headerShown:null}}/>
-      <Tab.Screen name={'Add Ingredients'} component={Add_edit_Ingredients} options={{tabBarIcon: () => ( <Ionicons name="add" size={20} />)}}/> 
-      <Tab.Screen  name={'Recipe List'} component={StackNavigation2} options={{tabBarIcon: () => ( <Ionicons name="fast-food-outline" size={20} />),headerShown:null } }/>    
-      <Tab.Screen  name={'Swipe'} component={SwipeUI} onClick={GetRecipes()} options={{tabBarIcon: () => ( <Ionicons name="fast-food-outline" size={20} />) } }/> 
-      </Tab.Navigator>
+    <Tab.Navigator>   
+    <Tab.Screen name={'Ingredients'} component={StackNavigation} options={{tabBarIcon: () => ( <Ionicons name="fast-food-outline" size={20} />),headerShown:null}}/>
+    <Tab.Screen name={'Add Ingredients'} component={Add_edit_Ingredients} options={{tabBarIcon: () => ( <Ionicons name="add" size={20} />)}}/> 
+    <Tab.Screen  name={'Recipe List'} component={StackNavigation2} options={{tabBarIcon: () => ( <Ionicons name="restaurant-outline" size={20} />),headerShown:null } }/>    
+    <Tab.Screen  name={'Swipe'} component={SwipeUI} onClick={GetRecipes()} options={{tabBarIcon: () => ( <Ionicons name="albums-outline" size={20} />) } }/> 
+    </Tab.Navigator>
   </NavigationContainer>
   );
 }

@@ -26,7 +26,7 @@ const GetRecipes = () => {
     index = 0
     index2 = 1
     recipes.forEach(element => { recipearray.push(Object.values(recipes[index].ingredients)) ; index++});
-   recipearray.forEach(element => { recipearray[index2-1].unshift(index2) ; index2++})
+   recipearray.forEach(element => {  recipearray[index2-1].unshift(index2) ; index2++})
    }
 
 }
