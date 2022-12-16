@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, ScrollView, Text, Platform, FlatList, StyleSheet, Button, Alert } from 'react-native';
+import { View, ScrollView, Text, Platform, FlatList, StyleSheet, Button, Alert, ImageBackground, Image } from 'react-native';
 import firebase from 'firebase/compat';
 import {useEffect, useState} from "react";
 import { recipearray } from './Algorithm';
@@ -7,6 +7,14 @@ import { ingredientarray } from './IngredientList';
 
 let matchArray = []
 let noMatchArray = []
+
+const images = [
+   { id: 1, uri: require('../assets/recipe1instructions.png') },   
+   { id: 2, uri: require('../assets/recipe2instructions.png') }, 
+   { id: 3, uri: require('../assets/recipe3instructions.png') },   
+   { id: 4, uri: require('../assets/recipe4instructions.png') }, 
+   { id: 5, uri: require('../assets/recipe5instructions.png') } 
+]
 
 
 
@@ -17,19 +25,26 @@ const RecipeDetails = ({route,navigation}) => {
         // Henter recipe values fra databasen
         
         setrecipe(route.params.recipe[0]);
-        console.log("route.params.recipe: " + route.params.recipe[0])
+        console.log("her")
+        console.log(route.params.id)
 
-
-
+        
 
        // tømmer objektet når man forlader RecipeDetails skærmen
         return () => {
             setrecipe({})
         }
     });
+
+    const changeView = () => {
+        // Vi navigerer videre til Editingredient skærmen og sender bilen videre med
+       
+        navigation.navigate('Instructions', route.params.id);
+    };
+
     
 var temp = Object.values(recipe)
-console.log(temp)
+//console.log(temp)
 
 temp.forEach(element => {
     if(ingredientarray.includes(element)){
@@ -39,8 +54,8 @@ temp.forEach(element => {
     else{
         noMatchArray.push(element)
     }
-console.log(matchArray)
-console.log(noMatchArray)
+//console.log(matchArray)
+//console.log(noMatchArray)
 
 })
 let noMatchObjectArray = Object.assign({}, noMatchArray);
@@ -60,7 +75,9 @@ noMatchArray = []
     // to knapper, der kører de før specificerede funktioner
     // herefter vises både keys og values
     return (
+        <ImageBackground source={require("../assets/opacity.png")}  style={styles.image} >
         <ScrollView style={styles.container}>
+        
             
             {
                 
@@ -94,8 +111,13 @@ noMatchArray = []
                     )
                 })
             }
+            
+           
         </ScrollView>
-        
+        <View style={{margin: 10}}>
+        <Button color={"#000000"} title="Instructions" onPress={ () => changeView()}/>
+        </View>
+        </ImageBackground>
        
     );
 
@@ -113,6 +135,11 @@ const styles = StyleSheet.create({
     },
     label: { width: 100, fontWeight: 'bold' },
     value: { flex: 1, color: 'green', fontSize: 20, textTransform: "capitalize"},
+    image: {
+        opacity: 1,
+        height: "100%",
+        width: "100%"
+     }
 });
 
 const styles1 = StyleSheet.create({

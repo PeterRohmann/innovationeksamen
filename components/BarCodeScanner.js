@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, Alert, ImageBackground } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import firebase from 'firebase/compat';
 
 const BarCodeComponent = ({navigation, route}) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [text, setText] = useState('Not yet scanned')
+  const [text, setText] = useState('Scan a barcode!')
   const [barcode,setBarcode] = useState({});
 
   const askForCameraPermission = () => {
@@ -34,10 +34,14 @@ const BarCodeComponent = ({navigation, route}) => {
     setScanned(true);
     setText(data)
     console.log('Type: ' + type + '\nData: ' + data)
-    
-var index = Object.keys(barcode).findIndex(element => element == data)
-var Item = Object.values(barcode)[index].name
-console.log(Item)
+    try{var index = Object.keys(barcode).findIndex(element => element == data)
+var Item = Object.values(barcode)[index].name}
+catch(error){
+  console.log(`push Error: ${error.message}`);
+  Alert.alert(`The ingredient does not exist in the database`);
+}
+
+
 //prøver først at opdatere
 // ellers opretter den på ny
 try {
@@ -70,6 +74,7 @@ navigation.navigate('Ingredient List');
 
   // Return til view
   return (
+    <ImageBackground source={require("../assets/opacity.png")}  style={styles.image} >
     <View style={styles.container}>
       <View style={styles.barcodebox}>
         <BarCodeScanner
@@ -80,6 +85,7 @@ navigation.navigate('Ingredient List');
 
       {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
     </View>
+    </ImageBackground>
   );
 }
 
@@ -88,7 +94,6 @@ export default BarCodeComponent;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -103,6 +108,11 @@ const styles = StyleSheet.create({
     width: 300,
     overflow: 'hidden',
     borderRadius: 30,
-    backgroundColor: 'tomato'
-  }
+    backgroundColor: `#000000`
+  },
+  image: {
+    opacity: 1,
+    height: "100%",
+    width: "100%"
+ }
 });

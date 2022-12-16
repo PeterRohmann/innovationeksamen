@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity, StyleSheet, ImageBackground} from 'react-native';
 import firebase from 'firebase/compat';
 import {useEffect, useState} from "react";
 import { swipeidarray } from './SwipeUI'
@@ -59,13 +59,15 @@ swipeidarray.forEach((element) => {
 //Obejct.entries laver objektet om til arrays hvor hver key og value har sit eget array
 // .find finder objektet hvor første index af array'et er lig med id'et
         let index = arrayfordetails.findIndex(element => Number(element) === id) + 1
-        console.log("her er index: " + index)
-        console.log(arrayfordetails)
+        
+        //console.log("arrayfordetails: "+arrayfordetails)
+        //console.log(arrayfordetails)
+        
         const recipe = arrayfordetails[index]
-        console.log("her er id: " + id)
+        
         //const recipe = arrayfordetails[1]
       
-        navigation.navigate('Recipe Details', { recipe });
+        navigation.navigate('Recipe Details', { recipe, id });
     };
 
     
@@ -73,7 +75,9 @@ swipeidarray.forEach((element) => {
 // flatlist indeholder elementer som keyextractor og renderitem
 // keyextractor sørger for at handleselectrecipe funktionen får det rigtige id
     return (
-        <FlatList
+        <ImageBackground source={require("../assets/opacity.png")}  style={styles.image} >
+        <View>
+        <FlatList style={styles.flatlist}
             data={arrayforlist}
             // Vi bruger recipeKeys til at finde ID på den aktuelle ingrediens og returnerer dette som key, og giver det med som ID til RecipesListItem
             keyExtractor={(index) => recipeKeys[index]}
@@ -82,7 +86,7 @@ swipeidarray.forEach((element) => {
                 
                 return(
                     <TouchableOpacity style={styles.container} onPress={() => handleSelectrecipe(swipeidarray[index])}>
-                        <Text>
+                        <Text style={styles.text}>
                             {item.name}
                             
                             
@@ -93,6 +97,9 @@ swipeidarray.forEach((element) => {
                 )
             }}
         />
+        
+        </View>
+        </ImageBackground>
     );
 }
 
@@ -107,7 +114,22 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 5,
         height: 50,
+        fontsize: 50,
         justifyContent:'center'
     },
+    flatlist: {
+    marginTop: 85
+    },
+    text: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: `#000000`,
+    opacity: 1
+    },
     label: { fontWeight: 'bold' },
+    image: {
+       opacity: 1,
+       height: "100%",
+       width: "100%"
+    }
 });

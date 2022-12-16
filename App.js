@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 import { Card } from 'react-native-paper';
@@ -21,6 +21,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import BarCodeComponent from './components/BarCodeScanner';
 import SwipeUI from './components/SwipeUI';
 import GetRecipes from './components/Algorithm';
+import Instructions from './components/Instructions';
 
 
 
@@ -52,14 +53,31 @@ if (!firebase.apps.length) {
   const StackNavigation = () => {
       return (
         
-          <Stack.Navigator
+          <Stack.Navigator style={{shadowColor: 'transparent'}}
               initialRouteName="Details"
           >
               <Stack.Screen name="Ingredient List" component={IngredientList}
                             options={{
+                                title: false,
                                 headerTitleAlign: 'center',
                                 headerTitleStyle: {color: 'white'},
-                                headerStyle: {backgroundColor: '#ba6262'}}
+                                headerStyle: {backgroundColor: '#ba6262'},
+                                marginTop: 100,
+                                
+                                headerBackground: () => (
+                                    <Image
+                                      style={{
+                                        marginTop: 35,
+                                        marginRight: 8,
+                                        height: 100,
+                                        width: "110%",
+                                        alignSelf: "center",
+                                        transform: [{ scale: 0.87 }]
+                                    }}
+                                      source={require("./assets/nobackgroundlogo.png")}
+                                      
+                                    />
+                                  )}
                             }
               />
             
@@ -67,16 +85,11 @@ if (!firebase.apps.length) {
                   headerTitleStyle: { textAlign: 'right', color: 'white' },
                   headerStyle: {backgroundColor: '#62bab5'}
               }} />
-              <Stack.Screen name="Ingredient Details" component={IngredientDetails} options={{
-                  headerTitleStyle: {color: 'black'},
-                  headerStyle: {backgroundColor: '#628bba'}
-              }}
+              <Stack.Screen name="Ingredient Details" component={IngredientDetails} 
+              
               />
               
-              <Stack.Screen name="Barcode Scanner" component={BarCodeComponent} options={{
-                  headerTitleStyle: {color: 'black'},
-                  headerStyle: {backgroundColor: '#628bba'}
-              }}
+              <Stack.Screen name="Barcode Scanner" component={BarCodeComponent} 
               />
           </Stack.Navigator>
           
@@ -93,17 +106,33 @@ if (!firebase.apps.length) {
             
             <Stack.Screen name="Recipe List" component={RecipeList}
                           options={{
-                              headerTitleAlign: 'center',
-                              headerTitleStyle: {color: 'white'},
-                              headerStyle: {backgroundColor: '#ba6262'}}
-                          }
+                            title: false,
+                            headerTitleAlign: 'center',
+                            headerTitleStyle: {color: 'white'},
+                            headerStyle: {backgroundColor: '#ba6262'},
+                            marginTop: 100,
+                            
+                            headerBackground: () => (
+                                <Image
+                                  style={{
+                                    marginTop: 35,
+                                    marginRight: 8,
+                                    height: 100,
+                                    width: "110%",
+                                    alignSelf: "center",
+                                    transform: [{ scale: 0.87 }]
+                                }}
+                                  source={require("./assets/nobackgroundlogo.png")}
+                                  
+                                />
+                              )}
+                        }
             />
            
            
-             <Stack.Screen name="Recipe Details" component={RecipeDetails} options={{
-                headerTitleStyle: {color: 'black'},
-                headerStyle: {backgroundColor: '#628bba'}
-            }}
+             <Stack.Screen name="Recipe Details" component={RecipeDetails} 
+            />
+            <Stack.Screen name="Instructions" component={Instructions} 
             />
             
         </Stack.Navigator>
@@ -115,10 +144,30 @@ export default function App() {
   return (
     <NavigationContainer>
     <Tab.Navigator>   
-    <Tab.Screen name={'Ingredients'} component={StackNavigation} options={{tabBarIcon: () => ( <Ionicons name="fast-food-outline" size={20} />),headerShown:null}}/>
-    <Tab.Screen name={'Add Ingredients'} component={Add_edit_Ingredients} options={{tabBarIcon: () => ( <Ionicons name="add" size={20} />)}}/> 
-    <Tab.Screen  name={'Recipe List'} component={StackNavigation2} options={{tabBarIcon: () => ( <Ionicons name="restaurant-outline" size={20} />),headerShown:null } }/>    
-    <Tab.Screen  name={'Swipe'} component={SwipeUI} onClick={GetRecipes()} options={{tabBarIcon: () => ( <Ionicons name="albums-outline" size={20} />) } }/> 
+    <Tab.Screen name={'Ingredients'} component={StackNavigation} options={ {tabBarIcon: () => ( <Ionicons name="fast-food-outline" size={20} />),headerShown:null}}/>
+    <Tab.Screen name={'Add an ingredient'} component={Add_edit_Ingredients} options={{tabBarIcon: () => ( <Ionicons name="add" size={20} />)}}/> 
+    <Tab.Screen  name={'Recipes'} component={StackNavigation2} options={{tabBarIcon: () => ( <Ionicons name="restaurant-outline" size={20} />),headerShown:null } }/>    
+    <Tab.Screen  name={'Swipe'} component={SwipeUI} onClick={GetRecipes()} options={{tabBarIcon: () => ( <Ionicons name="albums-outline" size={20} />) ,
+                            headerTitleAlign: 'center',
+                            headerTitleStyle: {color: 'white'},
+                            headerTitle: "",
+                            headerStyle: {backgroundColor: '#ba6262'},
+                            marginTop: 100,
+                            
+                            headerBackground: () => (
+                                <Image
+                                  style={{
+                                    marginTop: 35,
+                                    marginRight: 8,
+                                    height: 100,
+                                    width: "110%",
+                                    alignSelf: "center",
+                                    transform: [{ scale: 0.87 }]
+                                }}
+                                  source={require("./assets/nobackgroundlogo.png")}
+                                  
+                                />
+                              )} }/> 
     </Tab.Navigator>
   </NavigationContainer>
   );

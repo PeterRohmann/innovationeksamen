@@ -8,10 +8,12 @@ import {
     Alert,
     ScrollView,
     SafeAreaView,
+    ImageBackground,
 } from 'react-native';
 import firebase from 'firebase/compat';
 import {useEffect, useState} from "react";
 import { BarCodeScanner } from 'expo-barcode-scanner';
+
 
 const Add_edit_Ingredients = ({navigation,route}) => {
 //Dette er hvad der skal sendes til realtime databasen. 
@@ -94,17 +96,20 @@ const Add_edit_Ingredients = ({navigation,route}) => {
 //object.keys ændrer objektet til et array
 //.map kører funktionen for hver værdi i array'et. derfor bliver textinputtet oprettet til alle værdierne
     return (
+        <ImageBackground source={require("../assets/opacity.png")}  style={styles.image} >
         <SafeAreaView style={styles.container}>
             <ScrollView>
                 {
                     Object.keys(initialState).map((key,index) =>{
                         return(
                             <View style={styles.row} key={index}>
-                                <Text style={styles.label}>{key}</Text>
+                                {/* <Text style={styles.label}>{key}</Text> */}
+                                
                                 <TextInput
                                     value={newIngredient[key]}
                                     onChangeText={(event) => changeTextInput(key,event)}
                                     style={styles.input}
+                                    placeholder="Type an ingredient here..."
                                 />
                               
                             </View>
@@ -113,12 +118,15 @@ const Add_edit_Ingredients = ({navigation,route}) => {
                 }
                 {/*Ændrer navnet på knappen til save changes hvis isEditIngredient er true*/}
                  {/*Her har jeg lavet en ny button til barcode scanner. Den kører handlePress-funktionen, som navigerer til BarCodeScanner component*/}
-                <Text>{'\n'}</Text>
-                <Button title="Scan a barcode" onPress={() => handlePress()} />
-                <Text>{'\n'}</Text>
-                <Button title={ isEditIngredient ? "Save changes" : "Add ingredient"} onPress={() => handleSave()} />
+                <Text></Text>
+                <Text></Text>
+                <Text></Text>
+                <Button color={"#000000"} title="Scan a barcode" onPress={() => handlePress()} />
+                <Text></Text>
+                <Button color={"#000000"} title={ isEditIngredient ? "Save changes" : "Add ingredient"} onPress={() => handleSave()} />
             </ScrollView>
         </SafeAreaView>
+        </ImageBackground>
     );
 }
 
@@ -128,7 +136,8 @@ export default Add_edit_Ingredients;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        margin: 10
     },
     row: {
         flexDirection: 'row',
@@ -136,12 +145,27 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     label: {
-        fontWeight: 'bold',
-        width: 100
-    },
+        width: 100,
+        fontSize: 20,
+        color: `#000000`,
+        opacity: 1,
+        marginTop: 10
+        },
     input: {
+        flex: 1,
         borderWidth: 1,
-        padding:5,
-        flex: 1
+        borderRadius:10,
+        margin: 5,
+        padding: 5,
+        height: 50,
+        fontsize: 50,
+        justifyContent:'center',
+        textAlign: "center"
+        
     },
+    image: {
+        opacity: 1,
+        height: "100%",
+        width: "100%"
+     }
 });

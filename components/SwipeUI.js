@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, ImageBackground, LogBox } from 'react-native';
 import {useEffect, useState} from "react";
 import { recipearray } from './Algorithm';
 import { ingredientarray } from './IngredientList';
@@ -16,6 +16,9 @@ const Users = [
   { id: "4", uri: require('../assets/4.jpg') },
   { id: "5", uri: require('../assets/5.jpg') },
 ]
+
+LogBox.ignoreLogs(['Each child in a list']);
+
 var swipeindexarray = []
 export var swipeidarray = []
 
@@ -159,14 +162,15 @@ for ( let i = 0 ; finalarray.length !== 0 ; i++ ){
   newuserarray.push(Users[firstindex-1])
   finalarray.splice(0, 1)
  }
- 
+ newuserarray.push({key: 1})
  
 //kører her for den sidste billede i stacken
  swipeindexarray.forEach(element => {swipeidarray.push(finalarray2[element])})
  swipeindexarray = []
- 
+ //console.log(newuserarray)
   // vi laver algoritmen herfdsfsdfsdf
-      return newuserarray.map((item, i) => {
+      return newuserarray.map((item, i) =>  
+      {
         //console.log(i)
         //console.log(this.state.currentIndex)
         //console.log("item.id: "+item.id)
@@ -180,7 +184,7 @@ for ( let i = 0 ; finalarray.length !== 0 ; i++ ){
           swipeindexarray.forEach(element => {swipeidarray.push(finalarray2[element])})
           
           swipeindexarray = []
-          
+          //console.log(item)
           return (
             <Animated.View
             // her tilføjes animationen til kun det første index
@@ -241,6 +245,11 @@ for ( let i = 0 ; finalarray.length !== 0 ; i++ ){
     render() {
       
       return (
+        <ImageBackground source={require("../assets/opacity.png")}  style={{
+          opacity: 1,
+          height: "100%",
+          width: "100%"
+       }} >
         <View style={{ flex: 1 }}>
             
           <View style={{ height: 60 }}>
@@ -256,7 +265,7 @@ for ( let i = 0 ; finalarray.length !== 0 ; i++ ){
   
   
         </View>
-  
+        </ImageBackground>
       );
     }
   }

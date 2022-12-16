@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Platform, FlatList, StyleSheet, Button, Alert } from 'react-native';
+import { View, Text, Platform, FlatList, StyleSheet, Button, Alert, ImageBackground } from 'react-native';
 import firebase from 'firebase/compat';
 import {useEffect, useState} from "react";
 
@@ -62,32 +62,51 @@ const IngredientDetails = ({route,navigation}) => {
     // to knapper, der kører de før specificerede funktioner
     // herefter vises både keys og values
     return (
+        <ImageBackground source={require("../assets/opacity.png")}  style={styles.image} >
         <View style={styles.container}>
-            <Button title="Edit" onPress={ () => handleEdit()} />
-            <Button title="Delete" onPress={() => confirmDelete()} />
+           <Button color={"#000000"} title="Edit Ingredient" onPress={ () => handleEdit()}  />
+            <Text></Text>
+            <Button color={"#000000"} title="Delete Ingredient" onPress={() => confirmDelete()} />
             {
                 Object.entries(ingredient).map((item,index)=>{
                     return(
                         <View style={styles.row} key={index}>
-                            <Text style={styles.label}>{item[0]} </Text>
+                            <Text style={styles.label}>{item[0]}: </Text>
                             <Text style={styles.value}>{item[1]}</Text>
                         </View>
                     )
                 })
             }
         </View>
+        </ImageBackground>
     );
 }
 
 export default IngredientDetails;
 
 const styles = StyleSheet.create({
-    container: { flex: 1, justifyContent: 'flex-start' },
+    container: { flex: 1, justifyContent: 'flex-start',
+                 margin: 10 },
     row: {
         margin: 5,
         padding: 5,
         flexDirection: 'row',
     },
-    label: { width: 100, fontWeight: 'bold' },
-    value: { flex: 1 },
+    label: {
+        width: 100,
+        fontSize: 20,
+        color: `#000000`,
+        opacity: 1
+        },
+    value: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: `#000000`,
+        opacity: 1
+        },
+    image: {
+            opacity: 1,
+            height: "100%",
+            width: "100%"
+         }
 });

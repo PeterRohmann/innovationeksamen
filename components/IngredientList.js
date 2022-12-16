@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity, StyleSheet, ImageBackground, Image} from 'react-native';
 import firebase from 'firebase/compat';
 import {useEffect, useState} from "react";
 
@@ -52,20 +52,30 @@ const IngredientList = ({navigation}) => {
 // flatlist indeholder elementer som keyextractor og renderitem
 // keyextractor sørger for at handleselectIngredient funktionen får det rigtige id
     return (
-        <FlatList
+    <ImageBackground source={require("../assets/opacity.png")}  style={styles.image} >
+        <View>
+            
+  
+  
+        <FlatList style={styles.flatlist}
+        
             data={ingredientArray}
             // Vi bruger ingredientKeys til at finde ID på den aktuelle ingrediens og returnerer dette som key, og giver det med som ID til IngredientListItem
             keyExtractor={(index) => ingredientKeys[index]}
             renderItem={({ item, index }) => {
                 return(
-                    <TouchableOpacity style={styles.container} onPress={() => handleSelectIngredient(ingredientKeys[index])}>
-                        <Text>
+                    <TouchableOpacity style={styles.container}  onPress={() => handleSelectIngredient(ingredientKeys[index])}>
+                        <Text style={styles.text}>
                             {item.Item}
                         </Text>
+                        
                     </TouchableOpacity>
+                    
                 )
             }}
         />
+        </View>
+        </ImageBackground>
     );
 }
 
@@ -80,7 +90,23 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 5,
         height: 50,
+        fontsize: 50,
         justifyContent:'center'
     },
+    flatlist: {
+    marginTop: 85
+    },
+    text: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: `#000000`,
+    opacity: 1
+    },
     label: { fontWeight: 'bold' },
+    image: {
+       opacity: 1,
+       height: "100%",
+       width: "100%"
+    }
 });
+
